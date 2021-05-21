@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Imagens responsivas</title>
+    </head>
+    <body>
+        <picture>
+            <source media="(max-width: 400px)" srcset="img/html-css-js-pequeno.png" type="image/png">
+            <source media="(min-width: 401px) and (max-width:800px)" srcset="img/html-css-js-medio.png" type="image/png">
+            <source media="(min-width: 801px)" srcset="img/html-css-js-grande.png" type="image/png">
+            <!-- caso navegador sem picture tag -->
+            <img src="img/html-css-js-medio.png">
+        </picture>
+    </body>
+</html>
