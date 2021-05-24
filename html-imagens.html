@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Imagens responsivas</title>
-    </head>
-    <body>
+
+<head>
+    <title>Imagens responsivas</title>
+</head>
+
+<body>
+    <figure>
+        <figcaption>HTML, CSS & Java Script</figcaption>
         <picture>
-            <source media="(max-width: 400px)" srcset="img/html-css-js-pequeno.png" type="image/png">
-            <source media="(min-width: 401px) and (max-width:800px)" srcset="img/html-css-js-medio.png" type="image/png">
-            <source media="(min-width: 801px)" srcset="img/html-css-js-grande.png" type="image/png">
-            <!-- caso navegador sem picture tag -->
+            <source media="(max-width: 450px)" srcset="img/html-css-js-pequeno.png" type="image/png">
+            <source media="(min-width: 451px) and (max-width:900px)" srcset="img/html-css-js-medio.png"
+                type="image/png">
+            <source media="(min-width: 901px)" srcset="img/html-css-js-grande.png" type="image/png">
+            <!-- caso navegador sem a tag picture -->
             <img src="img/html-css-js-medio.png">
         </picture>
-    </body>
+    </figure>
+</body>
+
 </html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Imagens com CSS</title>
+    <style>
+        .figuras {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .figuras figure img {
+            width: 160px;
+        }
+
+        .figuras figure {
+            margin: auto;
+        }
+
+        .figuras figure figcaption {
+            font-family: Verdana, sans-serif;
+            font-size: xx-large;
+            font-weight: bolder;
+            text-align: center;
+        }
+
+        header {
+            background-image: url("img/workstation.jpg");
+            background-size: 100%;
+            background-position: top;
+            background-repeat: no-repeat;
+            background-color: black;
+            height: 300px;
+        }
+
+        header h1 {
+            color: white;
+            position: relative;
+            top: 45%;
+        }
+
+        body,
+        h1 {
+            margin: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Programação Web</h1>
+    </header>
+    <section class="figuras">
+        <figure>
+            <figcaption>HTML</figcaption>
+            <img src="img/html-logo.png">
+        </figure>
+        <figure>
+            <figcaption>CSS</figcaption>
+            <img src="img/css-logo.png">
+        </figure>
+        <figure>
+            <figcaption>JavaScript</figcaption>
+            <img src="img/js-logo.png">
+        </figure>
+    </section>
+</body>
+
+</html>
