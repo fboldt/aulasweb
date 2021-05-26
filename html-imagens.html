@@ -1,22 +1,19 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Imagens responsivas</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagens HTML 5</title>
 </head>
-
 <body>
     <figure>
-        <figcaption>HTML, CSS & Java Script</figcaption>
         <picture>
-            <source media="(max-width: 450px)" srcset="img/html-css-js-pequeno.png" type="image/png">
-            <source media="(min-width: 451px) and (max-width:900px)" srcset="img/html-css-js-medio.png"
-                type="image/png">
-            <source media="(min-width: 901px)" srcset="img/html-css-js-grande.png" type="image/png">
-            <!-- caso navegador sem a tag picture -->
-            <img src="img/html-css-js-medio.png">
+            <source media="(max-width: 400px)" srcset="img/html-css-js-pequeno.png" type="image/png">
+            <source media="(min-width: 600px)" srcset="img/html-css-js-grande.png" type="image/png">
+            <img src="img/html-css-js-medio.png" alt="HTML, CSS, JavaScript">
         </picture>
+        <figcaption>Logos de HTML5, CSS3 e JavaScript</figcaption>
     </figure>
 </body>
-
 </html>
