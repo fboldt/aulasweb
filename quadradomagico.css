@@ -19,6 +19,7 @@ input {
     font-size: larger;
 }
 
-input.errado {
+.foradoslimites > input, 
+.numerosrepetidos > input {
     color: red;
 }
