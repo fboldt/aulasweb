@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Tamanho título</title>
+    <script>
+        let tamanho = 2;
+        function atualiza() {
+            h1 = document.querySelector('h1');
+            h1.style.fontSize = `${tamanho}em`;
+        }
+        function aumenta() {
+            tamanho += 0.5;
+            atualiza();
+        }
+        function diminui() {
+            if (tamanho > 0) {
+                tamanho -= 0.5;
+                atualiza();
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1>
+        <button onclick="aumenta()">&nbsp;+&nbsp;</button>
+        <button onclick="diminui()">&nbsp;-&nbsp;</button>
+        JavaScript Styles
+    </h1>
+</body>
+
+</html>
