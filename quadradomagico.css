@@ -19,7 +19,38 @@ input {
     font-size: larger;
 }
 
-.foradoslimites > input, 
-.numerosrepetidos > input {
+.somaerradadiagonalprincipal input,
+.somaerradadiagonalsecundaria input,
+.somaerradalinha input,
+.somaerradacoluna input {
+    color: orange;
+}
+
+.somaerradadiagonalprincipal,
+.somaerradadiagonalsecundaria,
+.somaerradalinha,
+.somaerradacoluna {
+    border-color: orange;
+    border-width: 2px;
+}
+
+
+.foradoslimites input, 
+.numerosrepetidos input {
     color: red;
+}
+
+.foradoslimites, 
+.numerosrepetidos {
+    border-color: red;
+    border-width: 2px;
+}
+
+.vitoria tr td input {
+    color: green;
+}
+
+.vitoria tr td  {
+    border-color: green;
+    border-width: 3px;
 }
