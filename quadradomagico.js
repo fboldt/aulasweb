@@ -6,10 +6,10 @@ for (let i=0; i<matriz.length; i++) {
 const somaNumeros = 15;
 
 document.addEventListener('DOMContentLoaded', () => {
-    insereTabela(ordem);
+    insereTabela();
 });
 
-function insereTabela(ordem=3) {
+function insereTabela() {
     const tabela = document.createElement('table');
     tabela.id = 'quadradomagico';
     document.body.append(tabela);
@@ -39,26 +39,26 @@ function insereInput(celula) {
         matriz[linha][coluna] = valor;
         const quadradoCompleto = verificaMatriz();
         if (quadradoCompleto) {
-            document.querySelector("#quadradomagico").classList.add("vitoria");
+            document.querySelector('#quadradomagico').classList.add('vitoria');
         } else {
-            document.querySelector("#quadradomagico").classList.remove("vitoria");
+            document.querySelector('#quadradomagico').classList.remove('vitoria');
         }
     });
 }
 
 function verificaMatriz() {
-    const numerosForaDosLimites = verificaNumerosForaDosLimites();
     const numerosRepetidos = verificaNumerosRepetidos();
-    const todasSomasOK = verificaSomas();
-    return !numerosForaDosLimites && !numerosRepetidos && todasSomasOK;
+    const numerosForaDosLimites = verificaNumerosForaDosLimites();
+    const todasSomaOK = verificaSomas();
+    return !numerosRepetidos && !numerosForaDosLimites && todasSomaOK;
 }
 
 function verificaSomas() {
-    const diagonalPrincipalOK = verificaSomaDiagonalPrincipal();
-    const diagonalSecundariaOK = verificaSomaDiagonalSecundaria();
+    const diagonalPrincpalOK = verificaSomaDiagonalPrincipal();
+    const diagonalSegundariaOK = verificaSomaDiagonalSecundaria();
     const todasLinhasOK = verificaSomaLinhas();
     const todasColunasOK = verificaSomaColunas();
-    return diagonalPrincipalOK && diagonalSecundariaOK && todasLinhasOK && todasColunasOK;
+    return diagonalPrincpalOK && diagonalSegundariaOK && todasLinhasOK && todasColunasOK;
 }
 
 function verificaSomaColunas() {
@@ -69,25 +69,6 @@ function verificaSomaColunas() {
     return todasColunasOK;
 }
 
-function verificaSomaColuna(j) {
-    let soma = 0;
-    for (let i=0; i<ordem; i++) {
-        if (matriz[i][j] == null) return false;
-        soma += matriz[i][j];
-    }
-    if (soma != somaNumeros) {
-        for (let i=0; i<ordem; i++) {
-            atribuiClasseCelula("somaerradacoluna", i, j);
-        }
-        return false;
-    } else {
-        for (let i=0; i<ordem; i++) {
-            removeClasseCelula("somaerradacoluna", i, j);
-        }
-    }
-    return true;
-}
-
 function verificaSomaLinhas() {
     let todasLinhasOK = true;
     for (let i=0; i<ordem; i++) {
@@ -96,61 +77,82 @@ function verificaSomaLinhas() {
     return todasLinhasOK;
 }
 
+function verificaSomaColuna(j) {
+    let celulas = [];
+    for (let i=0; i<ordem; i++) {
+        celulas[i] = [i,j];
+    }
+    return verificaSomaCelulas(celulas, "somaerradacoluna");
+}
+
 function verificaSomaLinha(i) {
-    let soma = 0;
+    let celulas = [];
     for (let j=0; j<ordem; j++) {
-        if (matriz[i][j] == null) return false;
-        soma += matriz[i][j];
+        celulas[j] = [i,j];
     }
-    if (soma != somaNumeros) {
-        for (let j=0; j<ordem; j++) {
-            atribuiClasseCelula("somaerradalinha", i, j);
-        }
-        return false;
-    } else {
-        for (let j=0; j<ordem; j++) {
-            removeClasseCelula("somaerradalinha", i, j);
-        }
-    }
-    return true;
+    return verificaSomaCelulas(celulas, "somaerradalinha");
 }
 
 function verificaSomaDiagonalSecundaria() {
-    let soma = 0;
+    let celulas = [];
     for (let i=0; i<ordem; i++) {
-        if (matriz[i][ordem-i-1] == null) return false;
-        soma += matriz[i][ordem-i-1];
+        celulas[i] = [i,ordem-i-1];
     }
+    return verificaSomaCelulas(celulas, "somaerradadiagonalsecundaria");
+}
+
+function verificaSomaDiagonalPrincipal() {
+    let celulas = [];
+    for (let i=0; i<ordem; i++) {
+        celulas[i] = [i,i];
+    }
+    return verificaSomaCelulas(celulas, "somaerradadiagonalprincipal");
+}
+
+function celulaVazia(celula) {
+    const [i, j] = celula;
+    return matriz[i][j] == null;
+}
+
+function verificaSomaCelulas(celulas, classe) {
+    if (celulas.some(celulaVazia)) return false;
+    const soma = celulas.reduce(somaValores, 0);
     if (soma != somaNumeros) {
-        for (let i=0; i<ordem; i++) {
-            atribuiClasseCelula("somaerradadiagonalsecundaria", i, ordem-i-1);
-        }
+        acaoClasseCelulas(atribuiClasseCelula, classe, celulas);
         return false;
     } else {
-        for (let i=0; i<ordem; i++) {
-            removeClasseCelula("somaerradadiagonalsecundaria", i, ordem-i-1);
-        }
+        acaoClasseCelulas(removeClasseCelula, classe, celulas);
     }
     return true;
 }
 
-function verificaSomaDiagonalPrincipal() {
-    let soma = 0;
+function somaValores(total, celula) {
+    const [i, j] = celula;
+    return total + matriz[i][j];
+}
+
+function acaoClasseCelulas(acao, classe, celulas) {
+    celulas.map(celula => {
+        const [i, j] = celula;
+        acao(classe, i, j);
+    });
+}
+
+function verificaNumerosForaDosLimites() {
+    const minimo = 1;
+    const maximo = ordem**2;
+    let numerosForaDosLimites = false;
     for (let i=0; i<ordem; i++) {
-        if (matriz[i][i] == null) return false;
-        soma += matriz[i][i];
-    }
-    if (soma != somaNumeros) {
-        for (let i=0; i<ordem; i++) {
-            atribuiClasseCelula("somaerradadiagonalprincipal", i, i);
-        }
-        return false;
-    } else {
-        for (let i=0; i<ordem; i++) {
-            removeClasseCelula("somaerradadiagonalprincipal", i, i);
+        for (let j=0; j<ordem; j++) {
+            if (matriz[i][j] < minimo || matriz[i][j] > maximo) {
+                numerosForaDosLimites = true;
+                atribuiClasseCelula('foradoslimites', i, j);
+            } else {
+                removeClasseCelula('foradoslimites', i, j);
+            }
         }
     }
-    return true;
+    return numerosForaDosLimites;
 }
 
 function verificaNumerosRepetidos() {
@@ -167,34 +169,15 @@ function verificaNumerosRepetidos() {
     for (let i=0; i<ordem; i++) {
         for (let j=0; j<ordem; j++) {
             const valor = matriz[i][j];
-            const celula = document.querySelector(`#lin${i}col${j}`);
             if (!isNaN(valor) && numeros[valor-1] > 1) {
-                celula.classList.add("numerosrepetidos");
                 numerosRepetidos = true;
+                atribuiClasseCelula('numerosrepetidos', i, j);
             } else {
-                celula.classList.remove("numerosrepetidos");
+                removeClasseCelula('numerosrepetidos', i, j);
             }
         }
     }
     return numerosRepetidos;
-}
-
-function verificaNumerosForaDosLimites() {
-    const minimo = 1;
-    const maximo = ordem**2;
-    let numerosForaDosLimites = false;
-    for (let i=0; i<ordem; i++) {
-        for (let j=0; j<ordem; j++) {
-            const celula = document.querySelector(`#lin${i}col${j}`);
-            if (matriz[i][j] < minimo || matriz[i][j] > maximo) {
-                celula.classList.add("foradoslimites");
-                numerosForaDosLimites = true;
-            } else {
-                celula.classList.remove("foradoslimites");
-            }
-        }
-    }
-    return numerosForaDosLimites;
 }
 
 function atribuiClasseCelula(classe, i, j) {
