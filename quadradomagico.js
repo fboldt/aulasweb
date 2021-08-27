@@ -69,25 +69,6 @@ function verificaSomaColunas() {
     return todasColunasOK;
 }
 
-function verificaSomaColuna(j) {
-    let soma = 0;
-    for (let i=0; i<ordem; i++) {
-        if (matriz[i][j] == null) return false;
-        soma += matriz[i][j];
-    }
-    if (soma != somaNumeros) {
-        for (let i=0; i<ordem; i++) { 
-            atribuiClasseCelula("somaerradacoluna", i, j);
-        }
-        return false;
-    } else {
-        for (let i=0; i<ordem; i++) { 
-            removeClasseCelula("somaerradacoluna", i, j);
-        }
-    }
-    return true;
-}
-
 function verificaSomaLinhas() {
     let todasLinhasOK = true;
     for (let i=0; i<ordem; i++) {
@@ -96,61 +77,65 @@ function verificaSomaLinhas() {
     return todasLinhasOK;
 }
 
-function verificaSomaLinha(i) {
-    let soma = 0;
-    for (let j=0; j<ordem; j++) {
-        if (matriz[i][j] == null) return false;
-        soma += matriz[i][j];
-    }
+function celulaVazia(celula) {
+    const [i,j] = celula;
+    return matriz[i][j] == null;
+}
+
+function somaValores(total, celula) {
+    const [i,j] = celula;
+    return total + matriz[i][j];
+}
+
+function verificaSomaCelulas(celulas, classe) {
+    if (celulas.some(celulaVazia)) return false;
+    const soma = celulas.reduce(somaValores, 0);
     if (soma != somaNumeros) {
-        for (let j=0; j<ordem; j++) { 
-            atribuiClasseCelula("somaerradalinha", i, j);
-        }
+        acaoClasseCelulas(atribuiClasseCelula, classe, celulas);
         return false;
     } else {
-        for (let j=0; j<ordem; j++) { 
-            removeClasseCelula("somaerradalinha", i, j);
-        }
+        acaoClasseCelulas(removeClasseCelula, classe, celulas);
     }
     return true;
+}
+
+function acaoClasseCelulas(acao, classe, celulas) {
+    celulas.map(celula => {
+        const [i,j] = celula;
+        acao(classe, i, j);
+    });
+}
+
+function verificaSomaColuna(j) {
+    let celulas = [];
+    for (let i=0; i<ordem; i++) {
+        celulas[i] = [i,j];
+    }
+    return verificaSomaCelulas(celulas, "somaerradacoluna");
+}
+
+function verificaSomaLinha(j) {
+    let celulas = [];
+    for (let i=0; i<ordem; i++) {
+        celulas[i] = [j,i];
+    }
+    return verificaSomaCelulas(celulas, "somaerradalinha");
 }
 
 function verificaSomaDiagonalSecundaria() {
-    let soma = 0;
+    let celulas = [];
     for (let i=0; i<ordem; i++) {
-        if (matriz[i][ordem-i-1] == null) return false;
-        soma += matriz[i][ordem-i-1];
+        celulas[i] = [i,ordem-i-1];
     }
-    if (soma != somaNumeros) {
-        for (let i=0; i<ordem; i++) { 
-            atribuiClasseCelula("somaerradadiagonalsecundaria", i, ordem-i-1);
-        }
-        return false;
-    } else {
-        for (let i=0; i<ordem; i++) { 
-            removeClasseCelula("somaerradadiagonalsecundaria", i, ordem-i-1);
-        }
-    }
-    return true;
+    return verificaSomaCelulas(celulas, "somaerradadiagonalsecundaria");
 }
 
 function verificaSomaDiagonalPrincipal() {
-    let soma = 0;
+    let celulas = [];
     for (let i=0; i<ordem; i++) {
-        if (matriz[i][i] == null) return false;
-        soma += matriz[i][i];
+        celulas[i] = [i,i];
     }
-    if (soma != somaNumeros) {
-        for (let i=0; i<ordem; i++) { 
-            atribuiClasseCelula("somaerradadiagonalprincipal", i, i);
-        }
-        return false;
-    } else {
-        for (let i=0; i<ordem; i++) { 
-            removeClasseCelula("somaerradadiagonalprincipal", i, i);
-        }
-    }
-    return true;
+    return verificaSomaCelulas(celulas, "somaerradadiagonalprincipal");
 }
 
 function verificaNumerosForaDosLimites() {
