@@ -11,7 +11,7 @@
     <script>
     function display() {
         
-        let countDownDate = new Date("Sep 27, 2021 08:00:00").getTime();
+        let countDownDate = new Date("Sep 27, 2021 14:00:00").getTime();
         let now = new Date().getTime();
 
         let distance = countDownDate - now;
@@ -29,8 +29,11 @@
         + minutes + "m " + seconds + "s ";
         } else if (minutes > 0) {
             document.querySelector("#clock").innerText = minutes + "m " + seconds + "s ";
-        } else {
+        } else if (seconds > 0) {
             document.querySelector("#clock").innerText = seconds + "s ";
+        } else {
+            document.querySelector("#clock").innerText = days + "d " + hours + "h "
+        + minutes + "m " + seconds + "s ";
         }
 
     }
