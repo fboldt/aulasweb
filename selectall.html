@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select All</title>
+</head>
+<body>
+    <h1>JavaScript</h1>
+    <ol></ol>
+    <h2>Introdução à linguagem JavaScript</h2>
+    <h2>Eventos em JavaScript</h2>
+    <h2>Document Object Model</h2>
+    <h2>CSS com JavaScript</h2>
+    <h2>Networking</h2>
+    <h2>Armazenamento</h2>
+    <script>
+        const subtitulos = document.querySelectorAll('h2');
+        const topicos = new Array();
+        subtitulos.forEach(subtitulo => {
+            topicos.push(subtitulo.textContent);
+        });
+        lista = document.querySelector('ol');
+        topicos.forEach(topico => {
+            const item = document.createElement('li');
+            item.textContent = topico;
+            lista.append(item);
+        });
+    </script>
+</body>
+</html>
