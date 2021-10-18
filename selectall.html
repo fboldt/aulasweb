@@ -9,8 +9,6 @@
 <body>
     <h1>JavaScript</h1>
     <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
-    <ol></ol>
-    <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
     <h2>Introdução à linguagem JavaScript</h2>
     <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
     <h2>Eventos em JavaScript</h2>
@@ -39,7 +37,8 @@
             retorno.textContent = "início";
             element.parentElement.insertBefore(retorno, element.nextElementSibling);
         });
-        const lista = document.querySelector('ol');
+        const lista = document.createElement('ol');
+        document.body.insertBefore(lista,document.querySelector('h1').nextElementSibling);
         topicos.forEach(topico => {
             // insere os elementos da lista 
             const item = document.createElement('li');
