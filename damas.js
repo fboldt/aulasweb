@@ -1,47 +1,57 @@
-document.body.append(getTabuleiro());
+const tamanhoCelula = 4;
+let circId = 0;
+document.body.append(criaTabuleiro());
 
-function getTabuleiro() {
-    const size = 8;
+function criaTabuleiro() {
+    const tamanho = 8;
     let tabela = document.createElement('table');
-    tabela.setAttribute('id', 'tabuleiro');
 
-    tabela.style.borderStyle = "solid";
+    tabela.style.borderStyle = 'solid';
     tabela.style.borderSpacing = 0;
     tabela.style.margin = 'auto';
 
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < tamanho; i++) {
         let linha = document.createElement('tr');
         tabela.append(linha);
-        for (let j = 0; j < size; j++) {
+        for (let j = 0; j < tamanho; j++) {
             let celula = document.createElement('td');
-            tabela.append(celula);
+            linha.append(celula);
 
-            celula.style.width = '3em';
-            celula.style.height = '3em';
+            celula.style.width = `${tamanhoCelula}em`;
+            celula.style.height = `${tamanhoCelula}em`;
             if (i % 2 == j % 2) {
                 celula.style.backgroundColor = 'black';
+                let peca = criaPeca();
+                celula.append(peca);
+                let circulo;
                 if (i * 8 + j <= 24) {
-                    celula.append(getPeca('brown'));
+                    circulo = criaCirculo('brown');
+                    peca.append(circulo);
                 } else if (i * 8 + j >= 40) {
-                    celula.append(getPeca('beige'));
+                    circulo = criaCirculo('beige')
+                    peca.append(circulo);
                 }
             } else {
                 celula.style.backgroundColor = 'white';
             }
         }
-    }
+    };
     return tabela;
 }
 
-function getPeca(cor = 'red') {
-    peca = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
-    peca.setAttributeNS(null, 'width', '3em');
-    peca.setAttributeNS(null, 'height', '3em');
-    let circulo = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
-    circulo.setAttributeNS(null, 'cx', '1.5em');
-    circulo.setAttributeNS(null, 'cy', '1.5em');
-    circulo.setAttributeNS(null, 'r', '20');
-    circulo.setAttributeNS(null, 'fill', cor);
-    peca.append(circulo);
+function criaPeca() {
+    let peca = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    peca.setAttributeNS(null, 'width', `${tamanhoCelula}em`);
+    peca.setAttributeNS(null, 'height', `${tamanhoCelula}em`);
     return peca;
+}
+
+function criaCirculo(cor = 'red') {
+    let circulo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circulo.setAttributeNS(null, 'cx', `${tamanhoCelula / 2}em`);
+    circulo.setAttributeNS(null, 'cy', `${tamanhoCelula / 2}em`);
+    circulo.setAttributeNS(null, 'r', `${tamanhoCelula / 2.15}em`);
+    circulo.setAttributeNS(null, 'fill', cor);
+    circulo.setAttribute('id', `circulo-${circId++}`);
+    return circulo;
 }
