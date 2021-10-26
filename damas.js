@@ -1,4 +1,4 @@
-const tamanhoCelula = 70;
+const tamanhoCelula = 40;
 let pecaId = 0;
 document.body.append(criaTabuleiro());
 
