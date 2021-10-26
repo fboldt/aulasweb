@@ -1,5 +1,5 @@
-const tamanhoCelula = 4;
-let circId = 0;
+const tamanhoCelula = 70;
+let pecaId = 0;
 document.body.append(criaTabuleiro());
 
 function criaTabuleiro() {
@@ -17,20 +17,17 @@ function criaTabuleiro() {
             let celula = document.createElement('td');
             linha.append(celula);
 
-            celula.style.width = `${tamanhoCelula}em`;
-            celula.style.height = `${tamanhoCelula}em`;
+            celula.style.width = `${tamanhoCelula}px`;
+            celula.style.height = `${tamanhoCelula}px`;
             if (i % 2 == j % 2) {
                 celula.style.backgroundColor = 'black';
-                let peca = criaPeca();
-                celula.append(peca);
-                let circulo;
                 if (i * 8 + j <= 24) {
-                    circulo = criaCirculo('brown');
-                    peca.append(circulo);
+                    celula.append(criaPeca('black'));
                 } else if (i * 8 + j >= 40) {
-                    circulo = criaCirculo('beige')
-                    peca.append(circulo);
+                    celula.append(criaPeca('red'));
                 }
+                celula.ondrop = event => {drop(event);};
+                celula.ondragover = event => {allowDrop(event);};
             } else {
                 celula.style.backgroundColor = 'white';
             }
@@ -39,19 +36,27 @@ function criaTabuleiro() {
     return tabela;
 }
 
-function criaPeca() {
-    let peca = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    peca.setAttributeNS(null, 'width', `${tamanhoCelula}em`);
-    peca.setAttributeNS(null, 'height', `${tamanhoCelula}em`);
-    return peca;
+function criaPeca(cor) {
+    let imagem = document.createElement('img');
+    imagem.setAttribute('src', `img/${cor}.png`);
+    imagem.setAttribute('width', `${tamanhoCelula-4}px`);
+    imagem.setAttribute('height', `${tamanhoCelula-4}px`);
+    imagem.setAttribute('id',`peca-${pecaId++}`);
+    imagem.setAttribute('draggable', 'true');
+    imagem.ondragstart = event => {drag(event);};
+    return imagem;
 }
 
-function criaCirculo(cor = 'red') {
-    let circulo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    circulo.setAttributeNS(null, 'cx', `${tamanhoCelula / 2}em`);
-    circulo.setAttributeNS(null, 'cy', `${tamanhoCelula / 2}em`);
-    circulo.setAttributeNS(null, 'r', `${tamanhoCelula / 2.15}em`);
-    circulo.setAttributeNS(null, 'fill', cor);
-    circulo.setAttribute('id', `circulo-${circId++}`);
-    return circulo;
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    let data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.querySelector(`#${data}`));
 }
