@@ -1,4 +1,5 @@
-const tamanhoCelula = 2.3;
+const tamanhoCelula = 70;
+let pecaId = 0;
 document.body.append(criaTabuleiro());
 
 function criaTabuleiro() {
@@ -16,14 +17,14 @@ function criaTabuleiro() {
             let celula = document.createElement('td');
             linha.append(celula);
 
-            celula.style.width = `${tamanhoCelula}em`;
-            celula.style.height = `${tamanhoCelula}em`;
+            celula.style.width = `${tamanhoCelula}px`;
+            celula.style.height = `${tamanhoCelula}px`;
             if (i % 2 == j % 2) {
                 celula.style.backgroundColor = 'black';
                 if (i * 8 + j <= 24) {
-                    celula.append(criaPeca('brown'));
+                    celula.append(criaPeca('black'));
                 } else if (i * 8 + j >= 40) {
-                    celula.append(criaPeca('beige'));
+                    celula.append(criaPeca('red'));
                 }
             } else {
                 celula.style.backgroundColor = 'white';
@@ -33,15 +34,10 @@ function criaTabuleiro() {
     return tabela;
 }
 
-function criaPeca(cor = 'red') {
-    let peca = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    peca.setAttributeNS(null, 'width', `${tamanhoCelula}em`);
-    peca.setAttributeNS(null, 'height', `${tamanhoCelula}em`);
-    let circulo = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    circulo.setAttributeNS(null, 'cx', `${tamanhoCelula / 2}em`);
-    circulo.setAttributeNS(null, 'cy', `${tamanhoCelula / 2}em`);
-    circulo.setAttributeNS(null, 'r', `${tamanhoCelula / 2.15}em`);
-    circulo.setAttributeNS(null, 'fill', cor);
-    peca.append(circulo);
-    return peca;
+function criaPeca(cor) {
+    let imagem = document.createElement('img');
+    imagem.setAttribute('src', `img/${cor}.png`);
+    imagem.setAttribute('width', `${tamanhoCelula-4}px`);
+    imagem.setAttribute('height', `${tamanhoCelula-4}px`);
+    return imagem;
 }
