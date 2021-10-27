@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos JavaScript</title>
+    <script>
+        function mudaTitulo() {
+            let titulo = document.querySelector('h1');
+            titulo.textContent = "Eventos";
+        }
+        function mudaSubtitulo() {
+            let subtitulo = document.querySelector('h2');
+            subtitulo.textContent = "Propriedades";
+        }
+        // window.onload = mudaSubtitulo;
+        document.addEventListener('DOMContentLoaded', mudaTitulo);
+        document.addEventListener('DOMContentLoaded', mudaSubtitulo);
+        // document.removeEventListener('DOMContentLoaded', mudaTitulo);
+    </script>
+</head>
+<!-- <body onload="mudaTitulo();"> -->
+<body>
+    <h1>Hello</h1>
+    <h2>Handlers</h2>
+    <p id='depdisp'>dependentes de dispositivos</p>
+    <button onmousedown="eventoMouseDown();" onmouseup="eventoMouseUp();">
+        Mouse
+    </button>
+    <script>
+        function eventoMouseDown() {
+            let paragrafo = document.querySelector('#depdisp');
+            paragrafo.textContent = "O mouse está precionado";
+        }
+        function eventoMouseUp() {
+            let paragrafo = document.querySelector('#depdisp');
+            paragrafo.textContent = "O mouse foi liberado";
+        }
+    </script>
+    
+    <p id="indepdisp">0</p>
+    <button onclick="eventoClique();">Clique</button>
+    <script>
+        function eventoClique() {
+            let paragrafo = document.querySelector('#indepdisp');
+            paragrafo.textContent = parseInt(paragrafo.textContent) + 1;
+        }
+    </script>
+
+    <p>&nbsp;</p>
+    <button onfocus="this.textContent='estou com o foco'" onfocusout="this.textContent='perdi o foco'">
+        Focus
+    </button>
+</body>
+</html>
