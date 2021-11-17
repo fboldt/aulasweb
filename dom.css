@@ -1,0 +1,24 @@
+body, header, footer, section, .subsecao {
+    padding: 1em;
+    margin: 1em;
+}
+
+body {
+    background-color: bisque;
+}
+
+header, footer {
+    background-color: beige;
+}
+
+footer, header>h1 {
+    text-align: center;
+}
+
+section {
+    background-color: lightgoldenrodyellow;
+}
+
+.subsecao {
+    background-color: lightyellow;
+}
