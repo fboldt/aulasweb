@@ -6,13 +6,16 @@ criaSubsecoes();
 numeraSubsecoes();
 
 function numeraSubsecoes() {
-    let subsecoes = document.querySelectorAll('.subsecao');
-    let i = 0;
-    subsecoes.forEach(subsecao => {
-        subsecao.dataset.numero = ++i;
-        let tituloSubsecao = subsecao.querySelector('h3');
-        let numeroSecao = subsecao.parentElement.dataset.numero;
-        tituloSubsecao.textContent = `${numeroSecao}.${subsecao.dataset.numero}. ${tituloSubsecao.textContent}`;
+    let secoes = document.querySelectorAll('section')
+    secoes.forEach(secao => {
+        let subsecoes = secao.querySelectorAll('.subsecao');
+        let i = 0;
+        subsecoes.forEach(subsecao => {
+            subsecao.dataset.numero = ++i;
+            let tituloSubsecao = subsecao.querySelector('h3');
+            let numeroSecao = subsecao.parentElement.dataset.numero;
+            tituloSubsecao.textContent = `${numeroSecao}.${subsecao.dataset.numero}. ${tituloSubsecao.textContent}`;
+        });
     });
 }
 

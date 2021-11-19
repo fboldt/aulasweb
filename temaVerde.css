@@ -4,12 +4,12 @@ body, header, footer, section, .subsecao {
 }
 
 body {
-    background-color: bisque;
+    background-color: darkgreen;
     color: black;
 }
 
 header, footer {
-    background-color: beige;
+    background-color: green;
 }
 
 footer, header>h1 {
@@ -17,9 +17,9 @@ footer, header>h1 {
 }
 
 section {
-    background-color: lightgoldenrodyellow;
+    background-color: lightgreen;
 }
 
 .subsecao {
-    background-color: lightyellow;
+    background-color: lightseagreen;
 }

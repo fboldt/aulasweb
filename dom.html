@@ -5,8 +5,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="dom.css">
+    <link id="temaClaro" rel="stylesheet" href="dom.css">
     <title>DOM</title>
+    <style id="temaEscuro">
+        .oculto {
+            display: none;
+        }
+
+        body, header, footer, section, .subsecao {
+            padding: 1em;
+            margin: 1em;
+        }
+
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        header, footer {
+            background-color: gray;
+        }
+
+        footer, header>h1 {
+            text-align: center;
+        }
+
+        section {
+            background-color: darkgray;
+        }
+
+        .subsecao {
+            background-color: lightslategray;
+        }
+    </style>
 </head>
 
 <body>
@@ -87,10 +118,110 @@
 
     <p>A linguagem JavaScript também permite controlar a aparência dos documentos com CSS.</p>
 
+    <h3>Estilos comumente usados</h3>
+
+    <p>A variedade de estilos CSS é muito grande, mas vale a pena citar os estilos mais usados:</p>
+
+    <ul>
+        <li>Atribuir o valor "none" ao estilo <em>display</em> esconde o elemento.</li>
+        <li>A posição de um elemento pode ser alterada dinamicamente com o estilo <em>position</em>.</li>
+        <li>Pode-se espelhar, mudar o tamanho e rotacionar elementos com o estilo <em>transform</em>.</li>
+        <li>O estilo <em>transition</em> permite animar mudanças de outros estilos CSS.</li>
+    </ul>
+
+    <h3>Classes CSS</h3>
+
+    <p>A forma mais simples de alterar o estilo de um elemento é atribuir ou remover uma classe CSS.</p>
+
+    <button id="mostraDica">esconde</button>
+
+    <div id="dica" style="background-color:aqua; margin: 0 25% 0 25%;">Esta é uma dica que aparece em algum lugar na
+        página.</div>
+
+    <script>
+        function mostraDica() {
+            document.querySelector("#dica").classList.remove("oculto");
+        }
+        function escondeDica() {
+            document.querySelector("#dica").classList.add("oculto");
+        }
+        document.querySelector("#mostraDica").addEventListener("click", (e) => {
+            if (e.target.textContent == 'esconde') {
+                escondeDica();
+                e.target.textContent = 'mostra';
+            } else {
+                mostraDica();
+                e.target.textContent = 'esconde';
+            }
+        });
+    </script>
+
+    <h3>Estilos inline</h3>
+
+    <p>Algumas vezes não é viável fazer uma classe para cada estilo. Nessas situações, é melhor alterar o atributo
+        <em>style</em> diretamente.
+    </p>
+
+    <input type="text" id="topo" placeholder="topo">
+    <input type="text" id="esquerda" placeholder="esquerda">
+    <br>
+    <button id="moveDica">Move Dica</button>
+
+    <script>
+        function movePara(dica, x, y) {
+            dica.style.display = "block";
+            dica.style.position = "relative";
+            dica.style.left = `${x}px`;
+            dica.style.top = `${y}px`;
+        }
+        document.addEventListener("click", () => {
+            let x = document.querySelector("#esquerda").value;
+            let y = document.querySelector("#topo").value;
+            let dica = document.querySelector("#dica");
+            movePara(dica, x, y);
+        });
+    </script>
+
+    <p>Se uma propriedade CSS possui hífens, ela é representada sem os hífens e capitalizada em JavaScript. Por exemplo,
+        a propriedade <em>border-left-width</em> fica <em>BorderLeftWidth</em>.</p>
+
+    <h3>Alterando folhas de estilo</h3>
+
+    <p>É possível habilitar e desabilitar folhas de estilo com a propriedade <em>disabled</em>.</p>
+
+    <script>
+        function alternaTema() {
+            let temaEscuro = document.querySelector("#temaEscuro");
+            let temaClaro = document.querySelector("#temaClaro");
+            if (temaEscuro.disabled) {
+                temaEscuro.disabled = false;
+                temaClaro.disabled = true;
+            } else {
+                temaEscuro.disabled = true;
+                temaClaro.disabled = false;
+            }
+        }
+        function temaVerde() {
+            let link = document.createElement("link");
+            link.id = "temaVerde";
+            link.rel = "stylesheet";
+            link.href = "temaVerde.css";
+            document.head.append(link);
+        }
+    </script>
+
+    <button onclick="alternaTema();">alterna tema</button>
+
+    <button onclick="temaVerde();">tema verde</button>
+
+    <h3>Animações</h3>
+
+
+    
     <h2>Networking</h2>
 
     <p>A API <em>fetch()</em> permite fazer requisições HTTP.</p>
-    
+
     <h2>Armazenamento</h2>
 
     <p>Aplicações Web podem usar APIs dos navegadores para amazenar dados localmente no computador do usuário.</p>
