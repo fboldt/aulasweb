@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dom.css">
+    <title>DOM</title>
+</head>
+
+<body>
+
+    <h1>JavaScript</h1>
+
+    <p>Conteúdo da disciplina de Prog Web 2 para o curso técnico integrado ao ensino médio em informática para internet.
+    </p>
+
+    <h2>Introdução à linguagem JavaScript</h2>
+
+    <p>A linguagem JavaScript foi criada em 1994 com o propósito expresso de permitir comportamento dinâmico em
+        documentos apresentados por navegadores web.</p>
+
+    <h2>Eventos em JavaScript</h2>
+
+    <p>Os programas JavaScript que rodam nos navegadores usam um modelo de programação orientado a eventos.</p>
+
+    <h2>Document Object Model</h2>
+
+    <p>Cada objeto <em>Window</em> tem uma propriedade <em>document</em> para se referir ao objeto <em>Document</em>.
+        Este é um objeto central par arepresentar e manipular o conteúdo do documento.</p>
+
+    <h3>Selecionando Elementos do Documento</h3>
+
+    <p>Os métodos <em>querySelector()</em> e <em>querySelectorAll()</em> nos permitem um elemento ou elementos em um
+        documento.</p>
+
+    <h4>Selecionando elementos com seletores CSS</h4>
+
+    <p>Quase todos seletores CSS podem ser usados para selecionar elementos em JavaScript, mas algumas pseudoclasses não
+        funcionam.</p>
+
+    <h4>Métodos de seleção antigos</h4>
+
+    <p>Alguns métodos de seleção mais antigos ainda funcionam, mas é aconselhável que sejam evitados. São eles:</p>
+
+    <ul>
+        <li>.getElementById("id")</li>
+        <li>.getElementsByName("nome")</li>
+        <li>.getElementsByTagName("h1")</li>
+        <li>.getElementsByClassName("classe")</li>
+    </ul>
+
+    <h4>Elementos pré-selecionados</h4>
+
+    <p>As propriedades <em>images</em>, <em>forms</em> e <em>links</em> fornecem um acesso fácil aos elementos
+        &lt;img&gt;, &lt;form&gt; e &lt;a&gt;.</p>
+
+    <h3>Percorrendo a estrutura do documento</h3>
+
+    <p>A API para percorrer documentos não envolvem métodos. É um conjunto de propriedades nos objetos <em>Element</em>
+        que nos permitem referenciar o pai, filhos e irmãos de um determinado elemento.</p>
+
+    <h3>Atributos</h3>
+
+    <p>Os métodos da classe <em>Element</em> para manipular atributos são:</p>
+
+    <ol>
+        <li>getAttribute()</li>
+        <li>setAttribute()</li>
+        <li>hasAttribute()</li>
+        <li>removeAttribute()</li>
+    </ol>
+
+    <h3>Conteúdo do Elemento</h3>
+
+    <p>Usa-se <em>innerHTML</em> para acessar o conteúdo de um elemento, inclusive outras tags que ele possa ter. A
+        propriedade <em>textContent</em> ignora as tags dentro do elemento.</p>
+
+    <h3>Criando inserindo e removendo Nós</h3>
+
+    <p>O método <em>document.createElement("tag")</em> cria um novo elemento. Um elemento pode ser inserido usando os
+        métodos <em>append(elemento)</em> e <em>prepend(elemento)</em>. Pode-se usar o método <em>elemento.remove()</em>
+        para remover um elemento.</p>
+
+    <h2>CSS com JavaScript</h2>
+
+    <p>A linguagem JavaScript também permite controlar a aparência dos documentos com CSS.</p>
+
+    <h3>Estilos comumente usados</h3>
+
+    <p>A variedade de estilos CSS é muito grande, mas vale a pena citar os estilos mais usados:</p>
+
+    <ul>
+        <li>Atribuir o valor "none" ao estilo <em>display</em> esconde o elemento.</li>
+        <li>A posição de um elemento pode ser alterada dinamicamente com o estilo <em>position</em>.</li>
+        <li>Pode-se espelhar, mudar o tamanho e rotacionar elementos com o estilo <em>transform</em>.</li>
+        <li>O estilo <em>transition</em> permite animar mudanças de outros estilos CSS.</li>
+    </ul>
+
+    <h3>Classes CSS</h3>
+
+    <p>A forma mais simples de alterar o estilo de um elemento é atribuir ou remover uma classe CSS.</p>
+
+    <h3>Estilos inline</h3>
+
+    <p>Algumas vezes não é viável fazer uma classe para cada estilo. Nessas situações, é melhor alterar o atributo
+        <em>style</em> diretamente.
+    </p>
+
+    <p>Se uma propriedade CSS possui hífens, ela é representada sem os hífens e capitalizada em JavaScript. Por exemplo,
+        a propriedade <em>border-left-width</em> fica <em>BorderLeftWidth</em>.</p>
+
+    <h3>Alterando folhas de estilo</h3>
+
+    <p>É possível habilitar e desabilitar folhas de estilo com a propriedade <em>disabled</em>.</p>
+
+    <h2>Networking</h2>
+
+    <p>A API <em>fetch()</em> permite fazer requisições HTTP.</p>
+    
+    <h2>Armazenamento</h2>
+
+    <p>Aplicações Web podem usar APIs dos navegadores para amazenar dados localmente no computador do usuário.</p>
+
+    <script src="dom.js"></script>
+</body>
+
+</html>
