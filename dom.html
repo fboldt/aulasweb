@@ -7,49 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link id="temaClaro" rel="stylesheet" href="dom.css">
     <title>DOM</title>
-    <style>
-        .dica {
-            background-color: aqua;
-            margin: 0 25% 0 25%;
-        }
-
-        .oculto {
-            display: none;
-        }
-    </style>
-    <style id="temaEscuro">
-        body,
-        header,
-        footer,
-        section,
-        .subsecao {
-            padding: 1em;
-            margin: 1em;
-        }
-
-        body {
-            background-color: black;
-            color: white;
-        }
-
-        header,
-        footer {
-            background-color: gray;
-        }
-
-        footer,
-        header>h1 {
-            text-align: center;
-        }
-
-        section {
-            background-color: darkgray;
-        }
-
-        .subsecao {
-            background-color: lightslategray;
-        }
-    </style>
 </head>
 
 <body>
@@ -145,24 +102,29 @@
 
     <p>A forma mais simples de alterar o estilo de um elemento é atribuir ou remover uma classe CSS.</p>
 
-    <button id="mostraDica">esconde</button>
+    <style>
+        .dica {
+            background-color: aqua;
+            margin: 0 25% 0 25%;
+        }
+
+        .oculto {
+            display: none;
+        }
+    </style>
+    
+    <button id="mostraUmaDica">esconde</button>
 
     <div id="umaDica" class="dica">Esta é uma dica que aparece em algum lugar na
         página.</div>
 
     <script>
-        function mostraDica() {
-            document.querySelector("#umaDica").classList.remove("oculto");
-        }
-        function escondeDica() {
-            document.querySelector("#umaDica").classList.add("oculto");
-        }
-        document.querySelector("#mostraDica").addEventListener("click", (e) => {
+        document.querySelector("#mostraUmaDica").addEventListener("click", (e) => {
             if (e.target.textContent == 'esconde') {
-                escondeDica();
+                document.querySelector("#umaDica").classList.add("oculto");
                 e.target.textContent = 'mostra';
             } else {
-                mostraDica();
+                document.querySelector("#umaDica").classList.remove("oculto");
                 e.target.textContent = 'esconde';
             }
         });
@@ -201,6 +163,40 @@
 
     <h3>Alterando folhas de estilo</h3>
 
+    <style id="temaEscuro">
+        body,
+        header,
+        footer,
+        section,
+        .subsecao {
+            padding: 1em;
+            margin: 1em;
+        }
+
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        header,
+        footer {
+            background-color: gray;
+        }
+
+        footer,
+        header>h1 {
+            text-align: center;
+        }
+
+        section {
+            background-color: darkgray;
+        }
+
+        .subsecao {
+            background-color: lightslategray;
+        }
+    </style>
+    
     <p>É possível habilitar e desabilitar folhas de estilo com a propriedade <em>disabled</em>.</p>
 
     <script>
@@ -247,18 +243,12 @@
     <div id="maisUmaDica" class="dica desvanecente">Esta é MAIS uma dica que aparece em algum lugar na
         página.</div>
     <script>
-        function mostraDica() {
-            document.querySelector("#maisUmaDica").classList.remove("transparente");
-        }
-        function escondeDica() {
-            document.querySelector("#maisUmaDica").classList.add("transparente");
-        }
         document.querySelector("#mostraMaisUmaDica").addEventListener("click", (e) => {
             if (e.target.textContent == 'esconde') {
-                escondeDica();
+                document.querySelector("#maisUmaDica").classList.add("transparente");
                 e.target.textContent = 'mostra';
             } else {
-                mostraDica();
+                document.querySelector("#maisUmaDica").classList.remove("transparente");
                 e.target.textContent = 'esconde';
             }
         });
