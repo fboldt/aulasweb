@@ -9,9 +9,10 @@
     <title>DOM</title>
     <style>
         .dica {
-            background-color:aqua; 
+            background-color: aqua;
             margin: 0 25% 0 25%;
         }
+
         .oculto {
             display: none;
         }
@@ -173,7 +174,7 @@
         <em>style</em> diretamente.
     </p>
 
-    <div id="outraDica" class="dica">Mais uma dica. Esta pode ser movida.</div>
+    <div id="outraDica" class="dica">Outra dica. Esta pode ser movida.</div>
 
     <input type="text" id="topo" placeholder="topo">
     <input type="text" id="esquerda" placeholder="esquerda">
@@ -230,6 +231,38 @@
 
     <h3>Animações</h3>
 
+    <p>Um exemplo simples de animação.</p>
+
+    <button id="mostraMaisUmaDica">esconde</button>
+
+    <style>
+        .transparente {
+            opacity: 0;
+        }
+        .desvanecente {
+            transition: opacity .5s ease-in;
+        }
+    </style>
+
+    <div id="maisUmaDica" class="dica desvanecente">Esta é MAIS uma dica que aparece em algum lugar na
+        página.</div>
+    <script>
+        function mostraDica() {
+            document.querySelector("#maisUmaDica").classList.remove("transparente");
+        }
+        function escondeDica() {
+            document.querySelector("#maisUmaDica").classList.add("transparente");
+        }
+        document.querySelector("#mostraMaisUmaDica").addEventListener("click", (e) => {
+            if (e.target.textContent == 'esconde') {
+                escondeDica();
+                e.target.textContent = 'mostra';
+            } else {
+                mostraDica();
+                e.target.textContent = 'esconde';
+            }
+        });
+    </script>
 
     <h2>Networking</h2>
 
