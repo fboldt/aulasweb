@@ -7,12 +7,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link id="temaClaro" rel="stylesheet" href="dom.css">
     <title>DOM</title>
-    <style id="temaEscuro">
+    <style>
+        .dica {
+            background-color:aqua; 
+            margin: 0 25% 0 25%;
+        }
         .oculto {
             display: none;
         }
-
-        body, header, footer, section, .subsecao {
+    </style>
+    <style id="temaEscuro">
+        body,
+        header,
+        footer,
+        section,
+        .subsecao {
             padding: 1em;
             margin: 1em;
         }
@@ -22,11 +31,13 @@
             color: white;
         }
 
-        header, footer {
+        header,
+        footer {
             background-color: gray;
         }
 
-        footer, header>h1 {
+        footer,
+        header>h1 {
             text-align: center;
         }
 
@@ -135,15 +146,15 @@
 
     <button id="mostraDica">esconde</button>
 
-    <div id="dica" style="background-color:aqua; margin: 0 25% 0 25%;">Esta é uma dica que aparece em algum lugar na
+    <div id="umaDica" class="dica">Esta é uma dica que aparece em algum lugar na
         página.</div>
 
     <script>
         function mostraDica() {
-            document.querySelector("#dica").classList.remove("oculto");
+            document.querySelector("#umaDica").classList.remove("oculto");
         }
         function escondeDica() {
-            document.querySelector("#dica").classList.add("oculto");
+            document.querySelector("#umaDica").classList.add("oculto");
         }
         document.querySelector("#mostraDica").addEventListener("click", (e) => {
             if (e.target.textContent == 'esconde') {
@@ -162,6 +173,8 @@
         <em>style</em> diretamente.
     </p>
 
+    <div id="outraDica" class="dica">Mais uma dica. Esta pode ser movida.</div>
+
     <input type="text" id="topo" placeholder="topo">
     <input type="text" id="esquerda" placeholder="esquerda">
     <br>
@@ -177,7 +190,7 @@
         document.addEventListener("click", () => {
             let x = document.querySelector("#esquerda").value;
             let y = document.querySelector("#topo").value;
-            let dica = document.querySelector("#dica");
+            let dica = document.querySelector("#outraDica");
             movePara(dica, x, y);
         });
     </script>
@@ -202,11 +215,12 @@
             }
         }
         function temaVerde() {
-            let link = document.createElement("link");
-            link.id = "temaVerde";
-            link.rel = "stylesheet";
-            link.href = "temaVerde.css";
-            document.head.append(link);
+            let cssTemaVerde = document.createElement("link");
+            cssTemaVerde.id = "temaEscuro";
+            cssTemaVerde.rel = "stylesheet";
+            cssTemaVerde.href = "temaVerde.css";
+            temaEscuro = document.querySelector("#temaEscuro");
+            temaEscuro.replaceWith(cssTemaVerde);
         }
     </script>
 
@@ -217,7 +231,6 @@
     <h3>Animações</h3>
 
 
-    
     <h2>Networking</h2>
 
     <p>A API <em>fetch()</em> permite fazer requisições HTTP.</p>
