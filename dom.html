@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="dom.css">
+    <link id="temaClaro" rel="stylesheet" href="dom.css">
     <title>DOM</title>
 </head>
 
@@ -102,22 +102,154 @@
 
     <p>A forma mais simples de alterar o estilo de um elemento é atribuir ou remover uma classe CSS.</p>
 
+    <style>
+        .oculto {
+            display: none;
+        }
+        .dica {
+            background-color: aqua;
+            margin: 0 25% 0 25%;
+        }
+    </style>
+
+    <button id="mostraUmaDica">esconde</button>
+
+    <div id="umaDica" class="dica">Esta é uma dica que aparece na página.</div>
+
+    <script>
+        document.querySelector("#mostraUmaDica").addEventListener("click", e => {
+            if(e.target.textContent == 'esconde') {
+                e.target.textContent = 'mostra';
+                document.querySelector("#umaDica").classList.add("oculto");
+            } else {
+                e.target.textContent = 'esconde';
+                document.querySelector("#umaDica").classList.remove("oculto");
+            }
+        });
+    </script>
+
     <h3>Estilos inline</h3>
 
     <p>Algumas vezes não é viável fazer uma classe para cada estilo. Nessas situações, é melhor alterar o atributo
         <em>style</em> diretamente.
     </p>
 
+    <div id="outraDica" class="dica">Outra dica. Esta pode ser movida.</div>
+
+    <input type="text" id="topo" placeholder="topo">
+    <input type="text" id="esquerda" placeholder="esquerda">
+    <br>
+    <button id="moveDica">Move Dica</button>
+
+    <script>
+        function movePara(elemento, x, y) {
+            elemento.style.display = "block";
+            elemento.style.position = "relative";
+            elemento.style.left = `${x}px`;
+            elemento.style.top = `${y}px`;
+        }
+        document.querySelector('#moveDica').addEventListener("click", () => {
+            let x = document.querySelector('#esquerda').value;
+            let y = document.querySelector('#topo').value;
+            let dica = document.querySelector("#outraDica");
+            movePara(dica, x, y);
+        });
+    </script>
+
     <p>Se uma propriedade CSS possui hífens, ela é representada sem os hífens e capitalizada em JavaScript. Por exemplo,
-        a propriedade <em>border-left-width</em> fica <em>BorderLeftWidth</em>.</p>
+        a propriedade <em>border-left-width</em> fica <em>borderLeftWidth</em>.</p>
 
     <h3>Alterando folhas de estilo</h3>
 
+    <style id="temaEscuro">
+        body,
+        header,
+        footer,
+        section,
+        .subsecao {
+            padding: 1em;
+            margin: 1em;
+        }
+
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        header,
+        footer {
+            background-color: gray;
+        }
+
+        footer,
+        header>h1 {
+            text-align: center;
+        }
+
+        section {
+            background-color: darkgray;
+        }
+
+        .subsecao {
+            background-color: lightslategray;
+        }
+    </style>
+
     <p>É possível habilitar e desabilitar folhas de estilo com a propriedade <em>disabled</em>.</p>
+
+    <script>
+        function alternaTema() {
+            let temaEscuro = document.querySelector("#temaEscuro");
+            let temaClaro = document.querySelector("#temaClaro");
+            if (temaEscuro.disabled) {
+                temaEscuro.disabled = false;
+                temaClaro.disabled = true;
+            } else {
+                temaEscuro.disabled = true;
+                temaClaro.disabled = false;
+            }
+        }
+        function temaVerde() {
+            let cssTemaVerde = document.createElement('link');
+            cssTemaVerde.id = "temaEscuro";
+            cssTemaVerde.rel = "stylesheet";
+            cssTemaVerde.href = "temaVerde.css";
+            temaEscuro = document.querySelector("#temaEscuro");
+            temaEscuro.replaceWith(cssTemaVerde);
+        }
+    </script>
+
+    <button onclick="alternaTema()">Alterna Tema</button>
+    <button onclick="temaVerde()">Tema verde</button>
 
     <h3>Animações</h3>
 
     <p>Um exemplo simples de animação.</p>
+
+    <style>
+        .transparente {
+            opacity: 0;
+        }
+        .desvanecente {
+            transition: opacity .5s ease-in;
+        }
+    </style>
+
+    <button id="mostraMaisUmaDica">esconde</button>
+
+    <div id="maisUmaDica" class="dica desvanecente">Esta é MAIS uma dica que aparece na página.</div>
+
+    <script>
+        document.querySelector("#mostraMaisUmaDica").addEventListener("click", e => {
+            if (e.target.textContent == 'esconde') {
+                e.target.textContent = 'mostra';
+                document.querySelector("#maisUmaDica").classList.add("transparente");
+            } else {
+                e.target.textContent = 'esconde';
+                document.querySelector("#maisUmaDica").classList.remove("transparente");
+            }
+        });
+    </script>
 
     <h2>Networking</h2>
 
