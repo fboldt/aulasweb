@@ -258,6 +258,33 @@
 
     <p>A API <em>fetch()</em> permite fazer requisições HTTP.</p>
 
+    <h3>Um exemplo com a API fetch</h3>
+
+    <form action="">
+        <input type="text" id="cep" placeholder="CEP" size='9'>
+        <input type="text" id="estado" placeholder="Estado" size='3' disabled>
+        <input type="text" id="cidade" placeholder="Cidade" size='20' disabled><br>
+        <input type="text" id="bairro" placeholder="Bairro" size='9' disabled>
+        <input type="text" id="logradouro" placeholder="Logradouro" size='27' disabled><br>
+        <input type="button" value="Enviar">
+    </form>
+
+    <script>
+        document.querySelector("#cep").addEventListener("change", evento => {
+            fetch(`https://brasilapi.com.br/api/cep/v1/${evento.target.value}`)
+            .then(resposta => resposta.json())
+            .then(dados => {
+                atribuiValor('estado', dados.state);
+                atribuiValor('cidade', dados.city);
+                atribuiValor('bairro', dados.neighborhood);
+                atribuiValor('logradouro',dados.street);
+            });
+        });
+        function atribuiValor(id, valor) {
+            document.querySelector(`#${id}`).value = valor;
+        }
+    </script>
+
     <h2>Armazenamento</h2>
 
     <p>Aplicações Web podem usar APIs dos navegadores para amazenar dados localmente no computador do usuário.</p>
