@@ -5,6 +5,7 @@ body, header, footer, section, .subsecao {
 
 body {
     background-color: bisque;
+    color: black;
 }
 
 header, footer {

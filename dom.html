@@ -5,6 +5,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style id="temaEscuro">
+        body,
+        header,
+        footer,
+        section,
+        .subsecao {
+            padding: 1em;
+            margin: 1em;
+        }
+
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        header,
+        footer {
+            background-color: gray;
+        }
+
+        footer,
+        header>h1 {
+            text-align: center;
+        }
+
+        section {
+            background-color: darkgray;
+        }
+
+        .subsecao {
+            background-color: lightslategray;
+        }
+    </style>
     <link id="temaClaro" rel="stylesheet" href="dom.css">
     <title>DOM</title>
 </head>
@@ -161,39 +194,6 @@
 
     <h3>Alterando folhas de estilo</h3>
 
-    <style id="temaEscuro">
-        body,
-        header,
-        footer,
-        section,
-        .subsecao {
-            padding: 1em;
-            margin: 1em;
-        }
-
-        body {
-            background-color: black;
-            color: white;
-        }
-
-        header,
-        footer {
-            background-color: gray;
-        }
-
-        footer,
-        header>h1 {
-            text-align: center;
-        }
-
-        section {
-            background-color: darkgray;
-        }
-
-        .subsecao {
-            background-color: lightslategray;
-        }
-    </style>
 
     <p>É possível habilitar e desabilitar folhas de estilo com a propriedade <em>disabled</em>.</p>
 
@@ -201,12 +201,12 @@
         function alternaTema() {
             let temaEscuro = document.querySelector("#temaEscuro");
             let temaClaro = document.querySelector("#temaClaro");
-            if (temaEscuro.disabled) {
-                temaEscuro.disabled = false;
-                temaClaro.disabled = true;
-            } else {
+            if (temaClaro.disabled) {
                 temaEscuro.disabled = true;
                 temaClaro.disabled = false;
+            } else {
+                temaEscuro.disabled = false;
+                temaClaro.disabled = true;
             }
         }
         function temaVerde() {
