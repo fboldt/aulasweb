@@ -5,6 +5,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style id="temaEscuro">
+        body,
+        header,
+        footer,
+        section,
+        .subsecao {
+            padding: 1em;
+            margin: 1em;
+        }
+
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        header,
+        footer {
+            background-color: gray;
+        }
+
+        footer,
+        header>h1 {
+            text-align: center;
+        }
+
+        section {
+            background-color: darkgray;
+        }
+
+        .subsecao {
+            background-color: lightslategray;
+        }
+    </style>
     <link id="temaClaro" rel="stylesheet" href="dom.css">
     <title>DOM</title>
 </head>
@@ -103,29 +136,27 @@
     <p>A forma mais simples de alterar o estilo de um elemento é atribuir ou remover uma classe CSS.</p>
 
     <style>
+        .oculto {
+            display: none;
+        }
         .dica {
             background-color: aqua;
             margin: 0 25% 0 25%;
         }
-
-        .oculto {
-            display: none;
-        }
     </style>
-    
+
     <button id="mostraUmaDica">esconde</button>
 
-    <div id="umaDica" class="dica">Esta é uma dica que aparece em algum lugar na
-        página.</div>
+    <div id="umaDica" class="dica">Esta é uma dica que aparece na página.</div>
 
     <script>
-        document.querySelector("#mostraUmaDica").addEventListener("click", (e) => {
-            if (e.target.textContent == 'esconde') {
-                document.querySelector("#umaDica").classList.add("oculto");
+        document.querySelector("#mostraUmaDica").addEventListener("click", e => {
+            if(e.target.textContent == 'esconde') {
                 e.target.textContent = 'mostra';
+                document.querySelector("#umaDica").classList.add("oculto");
             } else {
-                document.querySelector("#umaDica").classList.remove("oculto");
                 e.target.textContent = 'esconde';
+                document.querySelector("#umaDica").classList.remove("oculto");
             }
         });
     </script>
@@ -144,75 +175,42 @@
     <button id="moveDica">Move Dica</button>
 
     <script>
-        function movePara(dica, x, y) {
-            dica.style.display = "block";
-            dica.style.position = "relative";
-            dica.style.left = `${x}px`;
-            dica.style.top = `${y}px`;
+        function movePara(elemento, x, y) {
+            elemento.style.display = "block";
+            elemento.style.position = "relative";
+            elemento.style.left = `${x}px`;
+            elemento.style.top = `${y}px`;
         }
-        document.addEventListener("click", () => {
-            let x = document.querySelector("#esquerda").value;
-            let y = document.querySelector("#topo").value;
+        document.querySelector('#moveDica').addEventListener("click", () => {
+            let x = document.querySelector('#esquerda').value;
+            let y = document.querySelector('#topo').value;
             let dica = document.querySelector("#outraDica");
             movePara(dica, x, y);
         });
     </script>
 
     <p>Se uma propriedade CSS possui hífens, ela é representada sem os hífens e capitalizada em JavaScript. Por exemplo,
-        a propriedade <em>border-left-width</em> fica <em>BorderLeftWidth</em>.</p>
+        a propriedade <em>border-left-width</em> fica <em>borderLeftWidth</em>.</p>
 
     <h3>Alterando folhas de estilo</h3>
 
-    <style id="temaEscuro">
-        body,
-        header,
-        footer,
-        section,
-        .subsecao {
-            padding: 1em;
-            margin: 1em;
-        }
 
-        body {
-            background-color: black;
-            color: white;
-        }
-
-        header,
-        footer {
-            background-color: gray;
-        }
-
-        footer,
-        header>h1 {
-            text-align: center;
-        }
-
-        section {
-            background-color: darkgray;
-        }
-
-        .subsecao {
-            background-color: lightslategray;
-        }
-    </style>
-    
     <p>É possível habilitar e desabilitar folhas de estilo com a propriedade <em>disabled</em>.</p>
 
     <script>
         function alternaTema() {
             let temaEscuro = document.querySelector("#temaEscuro");
             let temaClaro = document.querySelector("#temaClaro");
-            if (temaEscuro.disabled) {
-                temaEscuro.disabled = false;
-                temaClaro.disabled = true;
-            } else {
+            if (temaClaro.disabled) {
                 temaEscuro.disabled = true;
                 temaClaro.disabled = false;
+            } else {
+                temaEscuro.disabled = false;
+                temaClaro.disabled = true;
             }
         }
         function temaVerde() {
-            let cssTemaVerde = document.createElement("link");
+            let cssTemaVerde = document.createElement('link');
             cssTemaVerde.id = "temaEscuro";
             cssTemaVerde.rel = "stylesheet";
             cssTemaVerde.href = "temaVerde.css";
@@ -221,15 +219,12 @@
         }
     </script>
 
-    <button onclick="alternaTema();">alterna tema</button>
-
-    <button onclick="temaVerde();">tema verde</button>
+    <button onclick="alternaTema()">Alterna Tema</button>
+    <button onclick="temaVerde()">Tema verde</button>
 
     <h3>Animações</h3>
 
     <p>Um exemplo simples de animação.</p>
-
-    <button id="mostraMaisUmaDica">esconde</button>
 
     <style>
         .transparente {
@@ -240,16 +235,18 @@
         }
     </style>
 
-    <div id="maisUmaDica" class="dica desvanecente">Esta é MAIS uma dica que aparece em algum lugar na
-        página.</div>
+    <button id="mostraMaisUmaDica">esconde</button>
+
+    <div id="maisUmaDica" class="dica desvanecente">Esta é MAIS uma dica que aparece na página.</div>
+
     <script>
-        document.querySelector("#mostraMaisUmaDica").addEventListener("click", (e) => {
+        document.querySelector("#mostraMaisUmaDica").addEventListener("click", e => {
             if (e.target.textContent == 'esconde') {
-                document.querySelector("#maisUmaDica").classList.add("transparente");
                 e.target.textContent = 'mostra';
+                document.querySelector("#maisUmaDica").classList.add("transparente");
             } else {
-                document.querySelector("#maisUmaDica").classList.remove("transparente");
                 e.target.textContent = 'esconde';
+                document.querySelector("#maisUmaDica").classList.remove("transparente");
             }
         });
     </script>
@@ -257,29 +254,30 @@
     <h2>Networking</h2>
 
     <p>A API <em>fetch()</em> permite fazer requisições HTTP.</p>
-
-    <h3>Um exemplo com a API fetch</h3>
+    
+    <h3>Um exemplo com <em>fetch()</em></h3>
 
     <form action="">
-        <input type="text" id="cep" placeholder="CEP" size='9'>
-        <input type="text" id="estado" placeholder="Estado" size='3' disabled>
-        <input type="text" id="cidade" placeholder="Cidade" size='20' disabled><br>
-        <input type="text" id="bairro" placeholder="Bairro" size='9' disabled>
-        <input type="text" id="logradouro" placeholder="Logradouro" size='27' disabled><br>
+        <input type="text" id="cep" placeholder="CEP" size="9">
+        <input type="text" id="estado" placeholder="Estado" size="3" disabled>
+        <input type="text" id="cidade" placeholder="Cidade" size="20" disabled><br>
+        <input type="text" id="bairro" placeholder="Bairro" size="9" disabled>
+        <input type="text" id="logradouro" placeholder="Logradouro" size="30" disabled><br>
         <input type="button" value="Enviar">
     </form>
 
     <script>
-        document.querySelector("#cep").addEventListener("change", evento => {
+        document.querySelector("#cep").addEventListener("change", buscaDadosApi);
+        function buscaDadosApi(evento) {
             fetch(`https://brasilapi.com.br/api/cep/v1/${evento.target.value}`)
             .then(resposta => resposta.json())
             .then(dados => {
                 atribuiValor('estado', dados.state);
                 atribuiValor('cidade', dados.city);
                 atribuiValor('bairro', dados.neighborhood);
-                atribuiValor('logradouro',dados.street);
+                atribuiValor('logradouro', dados.street);
             });
-        });
+        }
         function atribuiValor(id, valor) {
             document.querySelector(`#${id}`).value = valor;
         }
@@ -288,6 +286,26 @@
     <h2>Armazenamento</h2>
 
     <p>Aplicações Web podem usar APIs dos navegadores para amazenar dados localmente no computador do usuário.</p>
+
+    <style>
+        dt {
+            font-weight: bold;
+        }
+    </style>
+    <h3>Web Storage</h3>
+    <p>É uma API que contém dois objetos:</p>
+    <dl>
+        <dt>localStorage</dt>
+        <dd>que permite armazenamento de strings por tempo indefinido;</dd>
+        <dt>sessionStorage</dt>
+        <dd>que permite armazenamento de strings enquanto durar a sessão do navegador.</dd>
+    </dl>
+
+    <h3>Cookies</h3>
+    <p>É um mecanismo antigo de armazenamento desenvolvido para ser usado em scripts do lado do servidor.</p>
+
+    <h3>IndexedDB</h3>
+    <p>É uma API assíncrona para um objeto database que suporta indexação.</p>
 
     <script src="dom.js"></script>
 </body>
