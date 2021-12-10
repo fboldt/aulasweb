@@ -287,6 +287,50 @@
 
     <p>Aplicações Web podem usar APIs dos navegadores para amazenar dados localmente no computador do usuário.</p>
 
+    <style>
+        dt {
+            font-weight: bold;
+        }
+    </style>
+    <h3>Web Storage</h3>
+    <p>É uma API que contém dois objetos:</p>
+    <dl style="width: 60%;">
+        <dt>localStorage</dt>
+        <dd>que permite armazenamento de strings por tempo indefinido;</dd>
+        <dt>sessionStorage</dt>
+        <dd>que permite armazenamento de strings enquanto durar a sessão do navegador.</dd>
+    </dl>
+
+    <h3>Cookies</h3>
+    <p style="width: 60%;">É um mecanismo antigo de armazenamento desenvolvido para ser usado em scripts do lado do servidor.</p>
+
+    <h3>IndexedDB</h3>
+    <p style="width: 60%;">É uma API assíncrona para um objeto database que suporta indexação.</p>
+
+    <h3>Exemplo: lista de tarefas</h3>
+    <p>Alguns funcionalidades, requisistos e limitações:</p>
+    
+    <h4>Funcionalidades</h4>
+    <ul>
+        <li>Inserir itens na lista</li>
+        <li>Remover itens da lista</li>
+        <li>Marcar itens como concluídos</li>
+        <li>Ocultar ou mostrar itens concluídos</li>
+    </ul>
+    <h4>Requisistos</h4>
+    <p style="width: 60%;">Deve ser capaz de se "lembrar" de quais tarefas foram:</p>    
+    <ul>
+        <li>incluídas</li>
+        <li>excluídas</li>
+        <li>concluídas</li>
+    </ul>
+    <h4>Limitações</h4>
+    <ul style="width: 60%;">
+        <li>Não funciona offline</li>
+        <li>Armazenamento no cliente</li>
+        <li>Não compartilha informações em navegadores diferentes</li>
+    </ul>
+
     <script src="dom.js"></script>
 </body>
 
