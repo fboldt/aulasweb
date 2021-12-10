@@ -24,22 +24,20 @@
             request.onerror = console.error;
             request.onsuccess = () => {
                 let db = request.result;
-                callback(db);
+                callback(getStore(db));
             }
             request.onupgradeneeded = () => {
                 db = request.result;
                 db.createObjectStore("tarefas", { autoIncrement: true });
-                callback(db);
+                callback(getStore(db));
+            }
+            function getStore(db) {
+                return db.transaction(["tarefas"], "readwrite").objectStore("tarefas");
             }
         }
 
-        function storeTarefas(db) {
-            return db.transaction(["tarefas"], "readwrite").objectStore("tarefas");
-        }
-
         function carregarTarefas(db) {
-            let tarefas = db.transaction(["tarefas"]).objectStore("tarefas");
-            tarefas.openCursor().onsuccess = evento => {
+            db.openCursor().onsuccess = evento => {
                 let cursor = evento.target.result;
                 if (cursor) {
                     const tarefa = novaTarefa(cursor.value.texto);
@@ -55,56 +53,72 @@
 
         const formulario = document.querySelector("form");
         formulario.addEventListener("submit", insereTarefa);
-        function insereTarefa(evento) {
-            evento.preventDefault();
-            const formulario = evento.target;
+
+        function getTextoInput(formulario) {
             const input = formulario.querySelector("input[type=text]");
             const texto = input.value;
-            if (texto == "") return;
             input.value = "";
             input.focus();
-            const lista = document.querySelector("#lista");
+            return texto;
+        }
+
+        function insereTarefa(evento) {
+            evento.preventDefault();
+            const texto = getTextoInput(evento.target);
+            if (texto == "") return;
             const tarefa = novaTarefa(texto);
-            lista.append(tarefa);
+            document.querySelector("#lista").append(tarefa);
             // adiciona no banco de dados
             withDB(db => {
-                let req = storeTarefas(db).put({ 'texto': texto, 'feito': false });
+                let req = db.add({ 'texto': texto, 'feito': false });
                 req.onsuccess = evento => {
                     tarefa.setAttribute('id', evento.target.result);
                 }
             });
         }
+
         function novaTarefa(texto) {
             const tarefa = document.createElement('p');
+            tarefa.append(criaCheckbox());
+            tarefa.append(texto + ' ');
+            tarefa.append(criaLixeira());
+            return tarefa;
+        }
+        
+        function criaCheckbox() {
             const checkbox = document.createElement('input');
             checkbox.setAttribute('type', 'checkbox');
-            checkbox.addEventListener('click', eventoCheckbox => {
-                withDB(db => {
-                    let id = parseInt(eventoCheckbox.target.parentNode.id);
-                    let req = storeTarefas(db).get(id);
-                    req.onsuccess = eventoReq => {
-                        let registro = eventoReq.target.result;
-                        registro['feito'] = eventoCheckbox.target.checked;
-                        storeTarefas(db).put(registro, id);
-                    }
-                });
+            checkbox.addEventListener('click', salvaChecagem);
+            return checkbox;    
+        }
+
+        function salvaChecagem(eventoCheckbox) {
+            withDB(db => {
+                let id = parseInt(eventoCheckbox.target.parentNode.id);
+                let req = db.get(id);
+                req.onsuccess = eventoReq => {
+                    let registro = eventoReq.target.result;
+                    registro['feito'] = eventoCheckbox.target.checked;
+                    db.put(registro, id);
+                }
             });
-            tarefa.append(checkbox);
-            tarefa.append(texto + ' ');
+        }
+        
+        function criaLixeira() {
             const lixeira = document.createElement('span');
             lixeira.classList.add('fa');
             lixeira.classList.add('fa-trash-o');
             lixeira.addEventListener('click', removeTarefa);
-            tarefa.append(lixeira);
-            return tarefa;
+            return lixeira;
         }
+
         function removeTarefa(evento) {
             const lixeira = evento.target;
             const tarefa = lixeira.parentNode;
             tarefa.remove();
             // remove do banco de dados
             withDB(db => {
-                storeTarefas(db).delete(parseInt(tarefa.id));
+                db.delete(parseInt(tarefa.id));
             });
         }
     </script>
