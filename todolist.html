@@ -5,12 +5,33 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do</title>
+    <title>Lista de tarefas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style id="estiloOculto">
+        .oculto {
+            display: none;
+        }
+    </style>
 </head>
 
 <body onload="withDB(carregarTarefas)">
     <h1>Tarefas</h1>
+
+    <button id="btnMostraOcultaTarefasFeitas">mostrar todas</button>
+    <script>
+        document.querySelector("#btnMostraOcultaTarefasFeitas").addEventListener("click",
+            evento => {
+                const estiloOculto = document.querySelector("#estiloOculto");
+                estiloOculto.disabled = !estiloOculto.disabled;
+                if (estiloOculto.disabled) {
+                    evento.target.textContent = "ocultar feitas";
+                } else {
+                    evento.target.textContent = "mostrar todas";
+                }
+            }
+        );
+    </script>
+
     <form action="">
         <input type="text" name="novatarefa" placeholder="Nova tarefa">
         <input type="submit" value="Inserir">
@@ -84,12 +105,21 @@
             tarefa.append(criaLixeira());
             return tarefa;
         }
-        
+
         function criaCheckbox() {
             const checkbox = document.createElement('input');
             checkbox.setAttribute('type', 'checkbox');
             checkbox.addEventListener('click', salvaChecagem);
-            return checkbox;    
+            checkbox.addEventListener('click', atribuiEstiloOculto);
+            return checkbox;
+        }
+
+        function atribuiEstiloOculto(evento) {
+            if (evento.target.checked) {
+                evento.target.parentNode.classList.add("oculto");
+            } else {
+                evento.target.parentNode.classList.remove("oculto");
+            }
         }
 
         function salvaChecagem(eventoCheckbox) {
@@ -103,7 +133,7 @@
                 }
             });
         }
-        
+
         function criaLixeira() {
             const lixeira = document.createElement('span');
             lixeira.classList.add('fa');
