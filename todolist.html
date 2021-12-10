@@ -17,14 +17,14 @@
     <div id="lista"></div>
 
     <script>
-        let request = indexedDB.open("listaTarefas", 2);
+        let request = indexedDB.open("listaTarefas", 1);
         request.onerror = console.error;
         let db;
         request.onsuccess = () => {
             db = request.result;
         }
         request.onupgradeneeded = (evento) => { 
-            db = event.target.result;
+            db = evento.target.result;
             db.createObjectStore("tarefas", {autoIncrement: true});
         }
 
@@ -33,8 +33,11 @@
             tarefas.openCursor().onsuccess = evento => {
                 let cursor = evento.target.result;
                 if (cursor) {
-                    const tarefa = novaTarefa(cursor.value);
+                    const tarefa = novaTarefa(cursor.value.texto);
                     tarefa.setAttribute('id', cursor.key);
+                    if (cursor.value.feito) {
+                        tarefa.firstElementChild.click();
+                    }
                     document.querySelector("#lista").append(tarefa);
                     cursor.continue();
                 }
@@ -57,13 +60,30 @@
             // adiciona no banco de dados
             let req = db.transaction(["tarefas"], "readwrite")
                         .objectStore("tarefas")
-                        .put(texto);
+                        .put({'texto': texto, 'feito': false});
             req.onsuccess = evento => {
                 tarefa.setAttribute('id', evento.target.result);
             }
         }
         function novaTarefa(texto) {
             const tarefa = document.createElement('p');
+            const checkbox = document.createElement('input');
+            checkbox.setAttribute('type', 'checkbox');
+            // checkbox.addEventListener('click', eventoCheckbox => {
+            //     if (eventoCheckbox.target.checked) {
+            //         let req = db.transaction(["tarefas"], "readwrite")
+            //             .objectStore("tarefas")
+            //             .get(parseInt(eventoCheckbox.target.parentNode.id));
+            //         req.onsuccess = eventoReq => {
+            //             let registro = eventoReq.target.result;
+            //             registro['feito'] = true;
+            //             db.transaction(["tarefas"], "readwrite")
+            //             .objectStore("tarefas")
+            //             .put(registro);
+            //         }
+            //     }
+            // });
+            tarefa.append(checkbox);
             tarefa.append(texto + ' ');
             const lixeira = document.createElement('span');
             lixeira.classList.add('fa');
@@ -81,9 +101,6 @@
             .objectStore("tarefas")
             .delete(parseInt(tarefa.id));
         }
-            // const checkbox = document.createElement('input');
-            // checkbox.setAttribute('type', 'checkbox');
-            // tarefa.append(checkbox);
     </script>
 </body>
 </html>
