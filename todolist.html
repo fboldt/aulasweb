@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,7 +8,8 @@
     <title>To Do</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body onload="carregarTarefas()">
+
+<body onload="withDB(carregarTarefas)">
     <h1>Tarefas</h1>
     <form action="">
         <input type="text" name="novatarefa" placeholder="Nova tarefa">
@@ -17,18 +19,25 @@
     <div id="lista"></div>
 
     <script>
-        let request = indexedDB.open("listaTarefas", 1);
-        request.onerror = console.error;
-        let db;
-        request.onsuccess = () => {
-            db = request.result;
-        }
-        request.onupgradeneeded = (evento) => { 
-            db = evento.target.result;
-            db.createObjectStore("tarefas", {autoIncrement: true});
+        function withDB(callback) {
+            let request = indexedDB.open("listaTarefas", 1);
+            request.onerror = console.error;
+            request.onsuccess = () => {
+                let db = request.result;
+                callback(db);
+            }
+            request.onupgradeneeded = () => {
+                db = request.result;
+                db.createObjectStore("tarefas", { autoIncrement: true });
+                callback(db);
+            }
         }
 
-        function carregarTarefas() {
+        function storeTarefas(db) {
+            return db.transaction(["tarefas"], "readwrite").objectStore("tarefas");
+        }
+
+        function carregarTarefas(db) {
             let tarefas = db.transaction(["tarefas"]).objectStore("tarefas");
             tarefas.openCursor().onsuccess = evento => {
                 let cursor = evento.target.result;
@@ -58,31 +67,28 @@
             const tarefa = novaTarefa(texto);
             lista.append(tarefa);
             // adiciona no banco de dados
-            let req = db.transaction(["tarefas"], "readwrite")
-                        .objectStore("tarefas")
-                        .put({'texto': texto, 'feito': false});
-            req.onsuccess = evento => {
-                tarefa.setAttribute('id', evento.target.result);
-            }
+            withDB(db => {
+                let req = storeTarefas(db).put({ 'texto': texto, 'feito': false });
+                req.onsuccess = evento => {
+                    tarefa.setAttribute('id', evento.target.result);
+                }
+            });
         }
         function novaTarefa(texto) {
             const tarefa = document.createElement('p');
             const checkbox = document.createElement('input');
             checkbox.setAttribute('type', 'checkbox');
-            // checkbox.addEventListener('click', eventoCheckbox => {
-            //     if (eventoCheckbox.target.checked) {
-            //         let req = db.transaction(["tarefas"], "readwrite")
-            //             .objectStore("tarefas")
-            //             .get(parseInt(eventoCheckbox.target.parentNode.id));
-            //         req.onsuccess = eventoReq => {
-            //             let registro = eventoReq.target.result;
-            //             registro['feito'] = true;
-            //             db.transaction(["tarefas"], "readwrite")
-            //             .objectStore("tarefas")
-            //             .put(registro);
-            //         }
-            //     }
-            // });
+            checkbox.addEventListener('click', eventoCheckbox => {
+                withDB(db => {
+                    let id = parseInt(eventoCheckbox.target.parentNode.id);
+                    let req = storeTarefas(db).get(id);
+                    req.onsuccess = eventoReq => {
+                        let registro = eventoReq.target.result;
+                        registro['feito'] = eventoCheckbox.target.checked;
+                        storeTarefas(db).put(registro, id);
+                    }
+                });
+            });
             tarefa.append(checkbox);
             tarefa.append(texto + ' ');
             const lixeira = document.createElement('span');
@@ -97,10 +103,11 @@
             const tarefa = lixeira.parentNode;
             tarefa.remove();
             // remove do banco de dados
-            db.transaction(["tarefas"], "readwrite")
-            .objectStore("tarefas")
-            .delete(parseInt(tarefa.id));
+            withDB(db => {
+                storeTarefas(db).delete(parseInt(tarefa.id));
+            });
         }
     </script>
 </body>
+
 </html>
