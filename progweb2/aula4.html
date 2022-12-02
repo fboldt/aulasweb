@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 4</title>
+    <script src="aula4.js"></script>
+	<style>
+		h2 { color: darkblue; }
+		h3 { color: darkred; }
+		h4 { color: darkgreen; }
+		
+		div {
+		  width: 350px;
+		  height: 70px;
+		  padding: 10px;
+		  border: 1px solid #aaaaaa;
+		}
+	</style>
+</head>
+<body>
+    <h1>Aula 4 - Eventos</h1>
+	<h2>Categorias de Eventos</h2>
+	
+	<h3>Dependentes de dispositivo de entrada</h3>
+	<h4>mousedown, mouseup</h4>
+	<button onmousedown="alert('mousedown')">mousedown</button>
+	<a href='' onmouseup="alert('mouseup')">mouseup</a>
+	<input type='text' onkeydown="console.log('keydown')" onfocus="console.log('focus')">
+	
+	<h3>Independentes de dispositivo de entrada</h3>
+	<a href='' onclick="alert('click')">click</a>
+	<input type='text' oninput="console.log('input')">
+	
+	<h3>De interface com o usuário</h3>
+	<input type='text' onfocus="console.log('focus')">
+	<input type='text' onchange="console.log('change')">
+	
+	<h3>Mudança de estado</h3>
+	
+	<h2>Event Handlers</h2>
+	
+	<h3>Atributos HTML</h3>
+	<button id="atributo" onclick="console.log('atributo')">handler via atributo</button>
+	
+	<h3>Propriedades</h3>
+	<button id="propriedadev1">handler via propriedade v1</button>
+	<script>
+		const btnpropv1 = document.querySelector('#propriedadev1')
+		function funcpropv1() {
+			console.log('propriedade v1')
+		}
+		function funcpropvx() {
+			console.log('propriedade vx')
+		}
+		btnpropv1.onclick = funcpropvx
+		btnpropv1.onclick = funcpropv1
+	</script>
+	
+	<button id="propriedadev2">handler via propriedade v2</button>
+	<script>
+		const btnpropv2 = document.querySelector('#propriedadev2')
+		btnpropv2.onclick = function () {
+			console.log('propriedade v2')
+		}
+	</script>
+	
+	<button id="propriedadev3">handler via propriedade v3</button>
+	<script>
+		const btnpropv3 = document.querySelector('#propriedadev3')
+		btnpropv3.onclick = () => {
+			console.log('propriedade v3')
+		}
+	</script>
+	
+	<button id="propriedadev4">handler via propriedade v4</button>
+	<script>
+		const btnpropv4 = document.querySelector('#propriedadev4')
+		btnpropv4.onclick = () => {
+			funcpropv4()
+			funcpropvx()
+		}
+		function funcpropv4() {
+			console.log('propriedade v4')
+		}
+	</script>
+	
+	<h3>Listeners</h3>
+	<button id="listener">handler via listener</button>
+	<script>
+		const btnlist = document.querySelector('#listener')
+		function funclist() {
+			console.log('listener')
+		}
+		btnlist.addEventListener('click', funclist)
+		btnlist.addEventListener('click', funcpropvx)
+		btnlist.addEventListener('click', () => {
+			console.log('arrow function')
+		})
+		function removeHandler() {
+			btnlist.removeEventListener('click', funcpropvx)
+			console.log('handler removido')
+		}
+	</script>
+	<button onclick="removeHandler()">remove handler</button>
+	
+	<h2>Drag and Drop</h2>
+	<script>
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+</script>
+
+<p>Drag the W3Schools image into the rectangle:</p>
+
+<div ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<br>
+<div ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<br>
+<img id="drag1" src="img_logo.gif" draggable="true" ondragstart="drag(event)" width="336" height="69">
+
+<script>
+	function naoClica(evento) {
+		console.log(evento)
+		evento.preventDefault()
+	}
+</script>
+<form action="http://google.com">
+<input type="submit" onclick="naoClica(event)" value="não clica">
+</form>
+
+</body>
+</html>

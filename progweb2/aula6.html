@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS com JavaScript</title>
+	<style>
+		body {
+			color: beige;
+			background-color: grey;
+		}
+	</style>
+	<style id='temaclaro'>
+		body {
+			color: darkblue;
+			background-color: beige;
+		}
+	</style>
+</head>
+<body>
+    <h1>CSS e JavaScript</h1>
+	
+	<h2>Classes CSS</h2>
+	<style>
+		.oculto {
+			visibility: hidden;
+		}
+	</style>
+	<div id='visibilidade'>Este texto pode desaparecer.</div>
+	<button id='btnmostraesconde'>esconde</button>
+	<script>
+		const btnmostraesconde = document.querySelector('#btnmostraesconde')
+		btnmostraesconde.addEventListener('click', function (evento) {
+			const elemento = document.querySelector('#visibilidade')
+			if (this.textContent == 'esconde') {
+				elemento.classList.add('oculto')
+				this.textContent = 'mostra'
+			} else {
+				elemento.classList.remove('oculto')
+				this.textContent = 'esconde'
+			}
+		})
+	</script>
+	
+	<h2>Propriedades CSS</h2>
+	<div id='divmove'>
+		<button id='btnesquerda'>esquerda</button>
+		<button id='btndireita'>direita</button>
+	</div>
+	<script>
+		const divmove = document.querySelector('#divmove')
+		divmove.style.display = 'block'
+		divmove.style.position = 'relative'
+		let esquerda = 0;
+		const btnesquerda = document.querySelector('#btnesquerda')
+		btnesquerda.addEventListener('click', function () {
+			esquerda -= 10
+			divmove.style.left = `${esquerda}px`
+		})
+		const btndireita = document.querySelector('#btndireita')
+		btndireita.addEventListener('click', function () {
+			esquerda += 10
+			divmove.style.left = `${esquerda}px`
+		})		
+	</script>
+	
+	
+	<h2>Folhas de estilo</h2>
+	<button id='mudatema'>tema escuro</button>
+	<script>
+		const btnmudatema = document.querySelector('#mudatema')
+		btnmudatema.addEventListener('click', function () {
+			const temaclaro = document.querySelector('#temaclaro')
+			if (this.textContent == 'tema escuro') {
+				temaclaro.disabled = true
+				this.textContent = 'tema claro'
+			} else {
+				temaclaro.disabled = false
+				this.textContent = 'tema escuro'			
+			}
+		})
+	</script>
+
+	<h2>Animação</h2>
+	<style>
+		.transparente {
+			opacity: 0;
+		}
+		.desvanecente {
+			transition: opacity 2s ease-in;
+		}
+	</style>
+	<div id='divdesintegra' class='desvanecente'>Este texto pode se desintegrar</div>
+	<button id='btndesintegra'>agora você vê</button>
+	<script>
+		const divdesintegra = document.querySelector('#divdesintegra')
+		const btndesintegra = document.querySelector('#btndesintegra')
+		btndesintegra.addEventListener('click', function () {
+			if (this.textContent == 'agora você vê') {
+				divdesintegra.classList.add('transparente')
+				this.textContent = 'agora não vê'
+			} else {
+				divdesintegra.classList.remove('transparente')
+				this.textContent = 'agora você vê'
+			}
+		})
+	</script>
+</body>
+</html>
+

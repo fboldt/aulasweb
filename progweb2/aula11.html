@@ -1,0 +1,115 @@
+<html>
+<head>
+	<title>Introdução JavaScript</title>
+	<!-- Question 1 & 3 & 7 -->
+	<script>
+		function myFunction() { 
+			alert("Hello World") 
+		}
+	</script>
+</head>
+<body>
+	<h1 id='demo'></h1>
+<!-- Question 1 & 3 -->
+<script>
+// Question 2:
+document.getElementById("demo").innerHTML = 'Introdução JavaScript'
+</script>
+<!-- Question 4 & 5 -->
+<script src="aula11.js"></script>
+<!-- Question 6 & 8 -->
+<button onclick='myFunction()'>Question 6</button>
+<!-- Question 9 & 22 & 23 -->
+<script>
+let i = 5
+if (i == 5) {
+	const p = document.createElement('p')
+	p.textContent = 'Question 9: OK'
+	document.body.appendChild(p)
+}
+</script>
+<!-- Question 10 -->
+<script>
+i = 6
+if (i != 5) {
+	const p = document.createElement('p')
+	p.textContent = 'Question 10: OK'
+	document.body.appendChild(p)
+}
+</script>
+<!-- Question 11 -->
+<script>
+i = 7
+const q11 = document.createElement('p')
+q11.textContent = 'Question 11:  '
+while (i <= 10) {
+	q11.textContent += `${i} `
+	i++
+}
+document.body.appendChild(q11)
+</script>
+<!-- Question 12 -->
+<script>
+i = 0
+const q12 = document.createElement('p')
+q12.textContent = 'Question 12:  '
+for (i = 0; i <= 5; i++)   {
+	q12.textContent += `${i} `
+}
+document.body.appendChild(q12)
+// Question 13
+/* Question
+14 */
+</script>
+<!-- Question 15 -->
+<script>
+const colors = ["red", "green", "blue"] 
+const q15 = document.createElement('p')
+q15.textContent = 'Question 15: '
+for( color in colors ) {
+	q15.textContent += `${colors[color]} `
+}
+document.body.appendChild(q15)
+</script>
+<!-- Question 16 -->
+<script>
+i = 6
+if (i != 5) {
+	const p = document.createElement('p')
+	p.textContent = `Question 16: ${Math.round(7.25)}`
+	document.body.appendChild(p)
+}
+</script>
+<!-- Question 17 -->
+<script>
+i = 6
+if (i != 5) {
+	const p = document.createElement('p')
+	p.textContent = `Question 17: ${Math.max(16, 17)}`
+	document.body.appendChild(p)
+}
+</script>
+<!-- Question 18 & 21 -->
+<button onclick='window.open("http://www.w3schools.com")'>Question 18</button>
+<!-- Question 19 -->
+<p>JavaScript is NOT the same as Java</p>
+<!-- Question 20 -->
+<script>
+const q20 = document.createElement('p')
+q20.textContent = `Question 20: ${navigator.appName}`
+document.body.appendChild(q20)
+</script>
+<!-- Question 24 -->
+<script>
+const q24 = document.createElement('p')
+q24.textContent = `Question 24: ${ Boolean(10 > 9) }`
+document.body.appendChild(q24)
+</script>
+<!-- Question 25 -->
+<script>
+const q25 = document.createElement('p')
+q25.textContent = `Question 25: ${ 'a' !== 'A' }`
+document.body.appendChild(q25)
+</script>
+</body>
+</html>

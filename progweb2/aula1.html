@@ -1,0 +1,23 @@
+<html>
+<head>
+	<title>Introdução JavaScript</title>
+</head>
+<body>
+	<h1>Introdução JavaScript</h1>
+<script>
+function mudah1() { 
+	const h1 = document.querySelector('h1')
+	const title = document.querySelector('title')
+	const button = document.querySelector('button')
+	h1.innerText = button.innerText
+	title.innerText = button.innerText
+	if (button.innerText == 'hello') {
+		button.innerText = 'goodbye'
+	} else {
+		button.innerText = 'hello'
+	}
+}
+</script>
+	<button onclick="mudah1()">hello</button>
+</body>
+</html>
